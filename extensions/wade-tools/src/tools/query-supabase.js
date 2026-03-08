@@ -27,13 +27,19 @@ COMP COLUMNS TO NEVER SELECT: compensation, salary, hourly, wage, pay_rate, base
 
 For combined card + bill Ramp queries, use query_ramp_spend.
 For Sage GL with pnl_bucket grouping, use query_sage_gl.
-For aggregated Toast/F&B metrics, use query_toast_data.`,
+For aggregated Toast/F&B metrics, use query_toast_data.
+
+RAW SQL: For complex queries requiring JOINs, CTEs, window functions, or subqueries, use the raw_sql parameter. Read-only SELECT statements only.`,
     parameters: {
         type: "object",
         properties: {
+            raw_sql: {
+                type: "string",
+                description: "Execute a read-only SQL SELECT statement directly. Supports JOINs, CTEs, window functions, GROUP BY, subqueries. Only SELECT is allowed — mutations are blocked. When set, all other parameters are ignored except limit.",
+            },
             table: {
                 type: "string",
-                description: "Table name. Ignored if rpc_name is set.",
+                description: "Table name. Ignored if rpc_name or raw_sql is set.",
             },
             select: {
                 type: "string",
@@ -91,6 +97,22 @@ For aggregated Toast/F&B metrics, use query_toast_data.`,
 };
 export async function execute(_id, params) {
     const supabase = getSupabase();
+    // Raw SQL mode
+    const rawSql = params.raw_sql;
+    if (rawSql) {
+        const limit = Math.min(params.limit ?? 200, 10000);
+        // Add LIMIT if not already present
+        const sqlWithLimit = /\blimit\b/i.test(rawSql) ? rawSql : `${rawSql} LIMIT ${limit}`;
+        const { data, error } = await supabase.rpc("execute_readonly_sql", { sql_query: sqlWithLimit });
+        if (error)
+            return textResult({ error: `SQL execution failed: ${error.message}` });
+        const rows = (data ?? []);
+        return textResult({
+            source: "raw_sql",
+            row_count: rows.length,
+            rows,
+        });
+    }
     // RPC mode
     const rpcName = params.rpc_name;
     if (rpcName) {

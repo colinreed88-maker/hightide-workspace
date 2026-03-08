@@ -5,6 +5,10 @@ export declare const definition: {
     parameters: {
         type: string;
         properties: {
+            raw_sql: {
+                type: string;
+                description: string;
+            };
             table: {
                 type: string;
                 description: string;

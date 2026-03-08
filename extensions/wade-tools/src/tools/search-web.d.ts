@@ -13,6 +13,30 @@ export declare const definition: {
                 type: string;
                 description: string;
             };
+            search_depth: {
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            topic: {
+                type: string;
+                enum: string[];
+                description: string;
+            };
+            include_domains: {
+                type: string;
+                items: {
+                    type: string;
+                };
+                description: string;
+            };
+            exclude_domains: {
+                type: string;
+                items: {
+                    type: string;
+                };
+                description: string;
+            };
         };
         required: string[];
     };
