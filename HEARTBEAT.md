@@ -22,6 +22,7 @@ Medium tasks (5-10 min, if no quick wins needed):
 1. Has a new month closed in Sage? Check app_config for mbr_last_closed_month. If it advanced since last check, notify Colin.
 2. Any Ramp bills over $25K posted today? Check ramp_bills for today's posting_date.
 3. Any calendar events in the next 2 hours that Colin should prep for? If yes, search the knowledge base (search_knowledge) for relevant context — past meeting notes with these attendees, recent Slack threads on the topic — and send a brief prep note.
+4. Gateway health: run `openclaw gateway status` — if gateway is down, alert Colin on Telegram immediately.
 
 ### Rules
 
