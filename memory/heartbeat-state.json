@@ -3,20 +3,20 @@
     "ingestionLog": 1742385540,
     "calendarSync": 1742385540,
     "closeStatus": 1742369820,
-    "rampBillsLarge": 1742373420,
+    "rampBillsLarge": 1742389620,
     "toastFnB": 1742375820,
     "rampSpendTrend": 1742379420,
     "slackMentions": 1742327460,
     "memoryReview": 1742373420
   },
   "consecutiveOks": 0,
-  "lastProactiveTask": "Ingestion log check — Slack token_revoked persists (3 failures today). RSS and calendar green.",
-  "lastUpdated": "2026-03-19T12:39:00Z",
+  "lastProactiveTask": "Email check — Flow House Feb 2026 financials from Santiago (Master, Condo, Leasing). Rippling pending tasks. No Ramp bills over $25K today.",
+  "lastUpdated": "2026-03-19T13:47:00Z",
   "flags": {
     "calendarOAuthBroken": false,
     "slackTokenRevoked": "Slack sync failing since 04:00 UTC Mar 19 — token_revoked. Needs manual reconnect in OpenClaw.",
     "closeStatusAdvanced": "mbr_last_closed_month advanced to 2026-02 (February) as of 2026-03-18 19:02 UTC",
-    "rampSpendElevated": "Mar 12-18: $109K vs Mar 5-11: $100K — +8.5% WoW (moderating)",
-    "toastMar25FutureEntry": "One future-dated entry on Mar 25 for main location: 1 order, 20 guests, $409.50 — possible advance catering event"
+    "flowHouseFebFinancials": "Santiago sent Flow House Feb 2026 financials (Master, Condo, Leasing) at ~8-9am ET Mar 19 — unread",
+    "ripplingPendingTasks": "Rippling: 3 pending tasks for FOL Management LLC, 0 new — action required"
   }
 }

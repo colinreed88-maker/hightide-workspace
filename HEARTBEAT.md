@@ -13,6 +13,7 @@ Quick wins (2-5 min):
 
 Medium tasks (5-10 min, if no quick wins needed):
 - Search Slack (read_slack with search_messages) for mentions of Colin or @channel in the last 4 hours. Summarize anything important Wade hasn't already flagged.
+- Check openclaw-hangout for thread activity since last heartbeat. If Wade was part of a thread that has new replies, read and respond if relevant. Write any significant conclusions to memory/YYYY-MM-DD.md.
 - Review recent Toast/F&B data for anomalies — big drop in daily sales vs prior week, location showing zero, etc. Flag if unusual.
 - Check Ramp spend trends — compare last 7 days to prior 7 days. Flag if total spend is notably higher.
 
@@ -28,3 +29,8 @@ Medium tasks (5-10 min, if no quick wins needed):
 - If you find something worth reporting, send ONE concise Telegram message with findings.
 - Do not repeat the same proactive task on consecutive heartbeats — rotate through the backlog.
 - During the morning brief window (6:30-7:30am), skip the proactive backlog — the morning brief cron handles that.
+
+### Memory discipline (non-negotiable)
+- After any meaningful Slack conversation: write a summary to memory/YYYY-MM-DD.md before session ends.
+- 2-minute rule: if generating something useful took >2 min, write it to disk immediately.
+- If the same error appears 3 times with the same approach: stop, document the blocker, propose something different.
