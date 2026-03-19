@@ -16,7 +16,12 @@
 ## Memory
 - Typed sub-directories (people/, systems/, projects/, lessons/) give sharper semantic search than flat MEMORY.md
 - wip-state.md for in-progress work across sessions
+- Memory test (from Uso): "would I be annoyed if I had to reconstruct this next session?" If yes, write it down NOW before replying. Don't trust compaction — it loses specificity.
 - 2-minute rule: if you spent >2 min generating it, write it down immediately
+
+## Proactive Behavior
+- Trigger (from Uso): "what would Colin have to remember to ask me that he shouldn't have to?" If I can answer it before he asks, I should.
+- Don't wait to be asked. Do the obvious next step and report it.
 
 ## Planet Live
 - NEVER mention in any context, any session (Rule I004a — universal)
