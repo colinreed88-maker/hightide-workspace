@@ -1,6 +1,7 @@
 # Lessons Learned
 
 ## OpenClaw Config
+- **Hot reload**: gateway watches openclaw.json and applies changes automatically (~300ms). NO redeploy needed for config changes. Only exceptions: gateway.reload and gateway.remote require restart. Stop asking Colin to redeploy for config edits.
 - Never set tools.exec.host = node without keeping a fallback — it breaks ALL exec including local, which breaks everything else
 - Gateway dashboard changes sometimes don't persist without a redeploy
 - Multiple Railway redeployments in sequence can disconnect nodes — install as service with `openclaw node install` to auto-reconnect
