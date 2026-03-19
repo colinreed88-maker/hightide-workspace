@@ -1,20 +1,22 @@
 {
   "lastChecks": {
-    "ingestionLog": 1742314260,
-    "calendarSync": 1742303460,
-    "closeStatus": 1742314260,
-    "rampBillsLarge": 1742324460,
-    "toastFnB": 1742327460,
-    "rampSpendTrend": 1742309460,
+    "ingestionLog": 1742369820,
+    "calendarSync": 1742369820,
+    "closeStatus": 1742369820,
+    "rampBillsLarge": 1742373420,
+    "toastFnB": 1742375820,
+    "rampSpendTrend": 1742379420,
     "slackMentions": 1742327460,
-    "memoryReview": 1742298660
+    "memoryReview": 1742373420
   },
-  "consecutiveOks": 2,
-  "lastProactiveTask": "Toast F&B check + All Hands channel update",
-  "lastUpdated": "2026-03-18T20:51:00Z",
+  "consecutiveOks": 0,
+  "lastProactiveTask": "Ramp spend trend Mar 12-18 vs Mar 5-11: $109K vs $100K (+8.5% WoW). Elevated but moderating from prior week spike. Not flagging.",
+  "lastUpdated": "2026-03-19T10:47:00Z",
   "flags": {
     "calendarOAuthBroken": false,
-    "allHandsTomorrow": "March 19 All Hands 11am ET — Colin presenting 'Embracing AI + New Finance AI Dashboard' (15 min). Slides deck: https://docs.google.com/presentation/d/1-M9ArUCi34qqGHyDahtRIUChscrHdI4eDNXgLikZlXQ. Brad finalizing; Daria dropping first thing tomorrow. No sign of Colin's slides yet.",
-    "rampSpendElevated": "Mar 11-18: $135K vs Mar 4-10: $106K — +27% WoW"
+    "slackTokenRevoked": "Slack sync failed at 04:00 UTC 2026-03-19 with token_revoked — needs reconnect",
+    "closeStatusAdvanced": "mbr_last_closed_month advanced to 2026-02 (February) as of 2026-03-18 19:02 UTC",
+    "rampSpendElevated": "Mar 12-18: $109K vs Mar 5-11: $100K — +8.5% WoW (moderating from prior +27%)",
+    "toastMar25FutureEntry": "One future-dated entry on Mar 25 for main location: 1 order, 20 guests, $409.50 — possible advance catering event"
   }
 }

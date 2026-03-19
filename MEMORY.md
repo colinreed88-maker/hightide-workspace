@@ -47,7 +47,7 @@ To map Sage GL departments to budget BUs, join:
 
 ## Close Status
 
-As of March 2026: `mbr_last_closed_month` = 2026-01 (January 2026).
+As of March 2026: `mbr_last_closed_month` = 2026-02 (February 2026). Advanced on 2026-03-18 at 19:02 UTC.
 
 ## Ramp Invoice Detail
 
