@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow Brickell — Building Organism</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    header {
+      background: #1a1d2e;
+      border-bottom: 1px solid #2d3148;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { font-size: 18px; font-weight: 600; color: #fff; }
+    header .subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .sandbox-badge {
+      background: #f59e0b22;
+      border: 1px solid #f59e0b55;
+      color: #f59e0b;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .refresh-time { font-size: 11px; color: #475569; margin-top: 4px; text-align: right; }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      padding: 20px 24px 0;
+    }
+    .kpi-card {
+      background: #1a1d2e;
+      border: 1px solid #2d3148;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .kpi-card .label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+    .kpi-card .value { font-size: 26px; font-weight: 700; color: #fff; margin: 6px 0 2px; }
+    .kpi-card .sub { font-size: 11px; color: #64748b; }
+    .kpi-card.alert { border-color: #ef444455; }
+    .kpi-card.alert .value { color: #ef4444; }
+    .kpi-card.warn { border-color: #f59e0b55; }
+    .kpi-card.warn .value { color: #f59e0b; }
+    .kpi-card.good { border-color: #22c55e55; }
+    .kpi-card.good .value { color: #22c55e; }
+
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 20px 24px;
+    }
+    @media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
+    .panel-full { grid-column: 1 / -1; }
+
+    .panel {
+      background: #1a1d2e;
+      border: 1px solid #2d3148;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid #2d3148;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-header h2 { font-size: 13px; font-weight: 600; color: #cbd5e1; }
+    .panel-header .live-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+      animation: pulse 2s infinite;
+      margin-right: 6px;
+      display: inline-block;
+    }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .panel-body { padding: 16px 18px; }
+
+    /* CEO Decision Log */
+    .decision-entry {
+      border-left: 3px solid #6366f1;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      background: #12151f;
+      border-radius: 0 8px 8px 0;
+    }
+    .decision-entry.critical { border-color: #ef4444; }
+    .decision-entry.high { border-color: #f59e0b; }
+    .decision-entry .unit-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6366f1;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .decision-entry.critical .unit-tag { color: #ef4444; }
+    .decision-entry.high .unit-tag { color: #f59e0b; }
+    .decision-entry .timestamp { font-size: 10px; color: #475569; float: right; }
+    .decision-section { margin-top: 8px; }
+    .decision-section .section-label {
+      font-size: 10px;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+    .decision-section .section-body { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+    .decision-section .section-body strong { color: #e2e8f0; }
+    .sandbox-tag {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 10px;
+      color: #f59e0b;
+      background: #f59e0b15;
+      border: 1px solid #f59e0b33;
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+
+    /* Dispatch Queue */
+    .dispatch-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e2236;
+    }
+    .dispatch-row:last-child { border-bottom: none; }
+    .dispatch-priority {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .dispatch-priority.critical { background: #ef444420; color: #ef4444; }
+    .dispatch-priority.high { background: #f59e0b20; color: #f59e0b; }
+    .dispatch-info { flex: 1; }
+    .dispatch-info .unit { font-size: 12px; font-weight: 600; color: #e2e8f0; }
+    .dispatch-info .vendor { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .dispatch-info .message { font-size: 11px; color: #94a3b8; margin-top: 4px; font-style: italic; }
+    .dispatch-status {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      background: #f59e0b15;
+      color: #f59e0b;
+      border: 1px solid #f59e0b33;
+      margin-top: 2px;
+    }
+
+    /* Risk Model */
+    .risk-unit {
+      padding: 12px 0;
+      border-bottom: 1px solid #1e2236;
+    }
+    .risk-unit:last-child { border-bottom: none; }
+    .risk-unit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .risk-unit-name { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+    .risk-score {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+    .risk-score.critical { background: #ef444420; color: #ef4444; }
+    .risk-score.high { background: #f59e0b20; color: #f59e0b; }
+    .risk-score.medium { background: #3b82f620; color: #3b82f6; }
+    .signal-bars { display: flex; gap: 8px; }
+    .signal-bar {
+      flex: 1;
+      background: #12151f;
+      border-radius: 4px;
+      padding: 6px 8px;
+    }
+    .signal-bar .sig-label { font-size: 9px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; }
+    .signal-bar .sig-val { font-size: 11px; font-weight: 600; margin-top: 2px; }
+    .signal-bar .sig-val.high { color: #ef4444; }
+    .signal-bar .sig-val.medium { color: #f59e0b; }
+    .signal-bar .sig-val.low { color: #22c55e; }
+    .signal-bar .sig-val.none { color: #475569; }
+
+    /* Loading */
+    .loading { color: #475569; font-size: 12px; padding: 20px 0; text-align: center; }
+    .error-msg { color: #ef4444; font-size: 12px; padding: 12px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🏢 Flow Brickell — Building Organism</h1>
+    <div class="subtitle">CEO decision engine · Sandbox mode · PROPERTY_ID = 59</div>
+  </div>
+  <div style="text-align:right">
+    <div class="sandbox-badge">⚠ SANDBOX — NO LIVE DISPATCH</div>
+    <div class="refresh-time" id="refresh-time">Refreshing...</div>
+  </div>
+</header>
+
+<!-- KPI Row -->
+<div class="kpi-row" id="kpi-row">
+  <div class="kpi-card warn">
+    <div class="label">Occupancy</div>
+    <div class="value" id="kpi-occupancy">—</div>
+    <div class="sub" id="kpi-occupancy-sub">Loading...</div>
+  </div>
+  <div class="kpi-card alert">
+    <div class="label">Delinquent Arrears</div>
+    <div class="value" id="kpi-arrears">—</div>
+    <div class="sub" id="kpi-arrears-sub">Loading...</div>
+  </div>
+  <div class="kpi-card warn">
+    <div class="label">Open Work Orders</div>
+    <div class="value" id="kpi-workorders">—</div>
+    <div class="sub" id="kpi-workorders-sub">Loading...</div>
+  </div>
+  <div class="kpi-card">
+    <div class="label">Renewals at Risk</div>
+    <div class="value" id="kpi-renewals">—</div>
+    <div class="sub" id="kpi-renewals-sub">Loading...</div>
+  </div>
+  <div class="kpi-card">
+    <div class="label">CEO Decisions (24h)</div>
+    <div class="value" id="kpi-decisions">—</div>
+    <div class="sub">From decision log</div>
+  </div>
+  <div class="kpi-card">
+    <div class="label">Dispatches Queued</div>
+    <div class="value" id="kpi-dispatches">—</div>
+    <div class="sub">Sandbox — not sent</div>
+  </div>
+</div>
+
+<!-- Main Panels -->
+<div class="panels">
+
+  <!-- CEO Decision Log - full width -->
+  <div class="panel panel-full">
+    <div class="panel-header">
+      <h2><span class="live-dot"></span>🧠 CEO Decision Log</h2>
+      <span style="font-size:11px;color:#475569">Signals / Decision / Reasoning · Option A via Paperclip</span>
+    </div>
+    <div class="panel-body" id="decision-log">
+      <div class="loading">Loading decisions from Paperclip...</div>
+    </div>
+  </div>
+
+  <!-- Unit Risk Model -->
+  <div class="panel">
+    <div class="panel-header">
+      <h2>⚠️ Unit Risk Model</h2>
+      <span style="font-size:11px;color:#475569">Cross-domain signals</span>
+    </div>
+    <div class="panel-body" id="risk-model">
+      <div class="loading">Loading risk model...</div>
+    </div>
+  </div>
+
+  <!-- Dispatch Queue -->
+  <div class="panel">
+    <div class="panel-header">
+      <h2>📋 Dispatch Queue</h2>
+      <span style="font-size:11px;color:#f59e0b">SANDBOX — logged, not sent</span>
+    </div>
+    <div class="panel-body" id="dispatch-queue">
+      <div class="loading">Loading dispatch queue...</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const API = '/api';  // FastAPI proxy base — set to actual host when deployed
+
+  // --- Helpers ---
+  function fmt$(n) {
+    if (n == null) return '—';
+    if (n >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000) return '$' + (n/1000).toFixed(0) + 'K';
+    return '$' + n.toFixed(0);
+  }
+
+  function timeAgo(ts) {
+    const d = Math.floor((Date.now() - new Date(ts)) / 1000);
+    if (d < 60) return d + 's ago';
+    if (d < 3600) return Math.floor(d/60) + 'm ago';
+    if (d < 86400) return Math.floor(d/3600) + 'h ago';
+    return Math.floor(d/86400) + 'd ago';
+  }
+
+  function riskClass(level) {
+    if (!level) return 'none';
+    const l = level.toLowerCase();
+    if (l === 'critical') return 'critical';
+    if (l === 'high') return 'high';
+    if (l === 'medium') return 'medium';
+    return 'low';
+  }
+
+  // --- KPIs ---
+  async function loadKPIs() {
+    try {
+      const r = await fetch(`${API}/kpis`);
+      if (!r.ok) throw new Error('KPI fetch failed');
+      const d = await r.json();
+      document.getElementById('kpi-occupancy').textContent = d.occupancy_pct != null ? d.occupancy_pct.toFixed(1) + '%' : '—';
+      document.getElementById('kpi-occupancy-sub').textContent = `${d.occupied_units ?? '—'} of ${d.total_units ?? '—'} units`;
+      document.getElementById('kpi-arrears').textContent = fmt$(d.total_arrears);
+      document.getElementById('kpi-arrears-sub').textContent = `${d.delinquent_units ?? '—'} delinquent units`;
+      document.getElementById('kpi-workorders').textContent = d.open_work_orders ?? '—';
+      document.getElementById('kpi-workorders-sub').textContent = `${d.critical_work_orders ?? '—'} critical`;
+      document.getElementById('kpi-renewals').textContent = d.renewals_at_risk ?? '—';
+      document.getElementById('kpi-renewals-sub').textContent = 'Expiring within 90 days';
+      document.getElementById('kpi-decisions').textContent = d.decisions_24h ?? '—';
+      document.getElementById('kpi-dispatches').textContent = d.dispatches_queued ?? '—';
+    } catch(e) {
+      console.warn('KPI error', e);
+    }
+  }
+
+  // --- CEO Decision Log ---
+  async function loadDecisionLog() {
+    const el = document.getElementById('decision-log');
+    try {
+      const r = await fetch(`${API}/decisions`);
+      if (!r.ok) throw new Error('Decision log fetch failed');
+      const decisions = await r.json();
+      if (!decisions.length) {
+        el.innerHTML = '<div class="loading">No decisions logged yet. CEO organism is initializing.</div>';
+        document.getElementById('kpi-decisions').textContent = '0';
+        return;
+      }
+      document.getElementById('kpi-decisions').textContent = decisions.length;
+      el.innerHTML = decisions.map(d => `
+        <div class="decision-entry ${riskClass(d.combined_risk)}">
+          <span class="unit-tag">${d.unit_name || d.unit_id}</span>
+          <span class="timestamp">${timeAgo(d.decided_at)}</span>
+
+          <div class="decision-section">
+            <div class="section-label">Signals</div>
+            <div class="section-body">
+              ${d.maintenance_signal ? `<strong>Maintenance:</strong> ${d.maintenance_signal} &nbsp;` : ''}
+              ${d.financial_signal ? `<strong>Financial:</strong> ${d.financial_signal} &nbsp;` : ''}
+              ${d.resident_signal ? `<strong>Resident:</strong> ${d.resident_signal}` : ''}
+            </div>
+          </div>
+
+          <div class="decision-section">
+            <div class="section-label">Decision</div>
+            <div class="section-body">${d.decision_text || '—'}</div>
+          </div>
+
+          <div class="decision-section">
+            <div class="section-label">Reasoning</div>
+            <div class="section-body">${d.reasoning || '—'}</div>
+          </div>
+
+          <span class="sandbox-tag">⚠ SANDBOX — ${d.dispatch_status || 'LOGGED_NOT_SENT'}</span>
+        </div>
+      `).join('');
+    } catch(e) {
+      el.innerHTML = `<div class="error-msg">Could not load decision log: ${e.message}</div>`;
+    }
+  }
+
+  // --- Unit Risk Model ---
+  async function loadRiskModel() {
+    const el = document.getElementById('risk-model');
+    try {
+      const r = await fetch(`${API}/risk-model`);
+      if (!r.ok) throw new Error('Risk model fetch failed');
+      const units = await r.json();
+      if (!units.length) {
+        el.innerHTML = '<div class="loading">No high-risk units detected.</div>';
+        return;
+      }
+      el.innerHTML = units.map(u => `
+        <div class="risk-unit">
+          <div class="risk-unit-header">
+            <div class="risk-unit-name">${u.unit_name}</div>
+            <span class="risk-score ${riskClass(u.combined_risk)}">${u.combined_risk || '—'}</span>
+          </div>
+          <div class="signal-bars">
+            <div class="signal-bar">
+              <div class="sig-label">Maintenance</div>
+              <div class="sig-val ${riskClass(u.maintenance_severity)}">${u.maintenance_summary || '—'}</div>
+            </div>
+            <div class="signal-bar">
+              <div class="sig-label">Financial</div>
+              <div class="sig-val ${riskClass(u.financial_severity)}">${u.financial_summary || '—'}</div>
+            </div>
+            <div class="signal-bar">
+              <div class="sig-label">Resident</div>
+              <div class="sig-val ${riskClass(u.resident_severity)}">${u.resident_summary || '—'}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch(e) {
+      el.innerHTML = `<div class="error-msg">Could not load risk model: ${e.message}</div>`;
+    }
+  }
+
+  // --- Dispatch Queue ---
+  async function loadDispatchQueue() {
+    const el = document.getElementById('dispatch-queue');
+    try {
+      const r = await fetch(`${API}/dispatches`);
+      if (!r.ok) throw new Error('Dispatch queue fetch failed');
+      const dispatches = await r.json();
+      document.getElementById('kpi-dispatches').textContent = dispatches.length;
+      if (!dispatches.length) {
+        el.innerHTML = '<div class="loading">No dispatches queued.</div>';
+        return;
+      }
+      el.innerHTML = dispatches.map(d => `
+        <div class="dispatch-row">
+          <span class="dispatch-priority ${riskClass(d.priority)}">${d.priority || 'P2'}</span>
+          <div class="dispatch-info">
+            <div class="unit">${d.unit_name} — ${d.trade || d.category}</div>
+            <div class="vendor">→ ${d.vendor_name} · ${d.vendor_rate}</div>
+            <div class="message">"${d.dispatch_message}"</div>
+          </div>
+          <span class="dispatch-status">LOGGED_NOT_SENT</span>
+        </div>
+      `).join('');
+    } catch(e) {
+      el.innerHTML = `<div class="error-msg">Could not load dispatch queue: ${e.message}</div>`;
+    }
+  }
+
+  // --- Refresh loop ---
+  async function refresh() {
+    await Promise.all([loadKPIs(), loadDecisionLog(), loadRiskModel(), loadDispatchQueue()]);
+    document.getElementById('refresh-time').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  }
+
+  refresh();
+  setInterval(refresh, 60000);
+</script>
+
+</body>
+</html>
