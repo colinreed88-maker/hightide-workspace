@@ -49,8 +49,8 @@ Strategic Finance is Flow's FP&A function. The team serves as embedded financial
 | David Freibaum | Partner, Real Estate |
 | Tom Callagee | Real Estate, Acquisitions |
 | Mark Lapidus | Acquisitions (Tom Callagee and Halsey McHenry report to him) |
-| Sagi Rubin | Asset Management |
-| Jill Forster | Managing Director, Asset Management (reports to DJ Mauch) |
+| Sagi Rubin | Head of Asset Management |
+| Jill Forster | Managing Director, Asset Management (reports to Sagi Rubin) |
 
 **Development:**
 
