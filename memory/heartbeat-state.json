@@ -1,19 +1,20 @@
 {
   "lastChecks": {
-    "ingestionLog": 1741893240,
-    "calendarSync": 1741875240,
-    "closeStatus": 1741886640,
-    "rampBillsLarge": 1741886640,
-    "toastFnB": 1741867840,
-    "rampSpendTrend": 1741890240,
-    "slackMentions": 1741895340,
-    "memoryReview": 1741854240
+    "ingestionLog": 1742314260,
+    "calendarSync": 1742303460,
+    "closeStatus": 1742314260,
+    "rampBillsLarge": 1742324460,
+    "toastFnB": 1742327460,
+    "rampSpendTrend": 1742309460,
+    "slackMentions": 1742327460,
+    "memoryReview": 1742298660
   },
-  "consecutiveOks": 1,
-  "lastProactiveTask": "EOD wire + Slack scan",
-  "lastUpdated": "2026-03-13T20:59:00Z",
+  "consecutiveOks": 2,
+  "lastProactiveTask": "Toast F&B check + All Hands channel update",
+  "lastUpdated": "2026-03-18T20:51:00Z",
   "flags": {
-    "calendarOAuthBroken": true,
-    "fridayWiresStatus": "EOD: UBS->FlowGlobal green; FlowGlobal->MGMT + DACA externals still orange - likely carry to Monday"
+    "calendarOAuthBroken": false,
+    "allHandsTomorrow": "March 19 All Hands 11am ET — Colin presenting 'Embracing AI + New Finance AI Dashboard' (15 min). Slides deck: https://docs.google.com/presentation/d/1-M9ArUCi34qqGHyDahtRIUChscrHdI4eDNXgLikZlXQ. Brad finalizing; Daria dropping first thing tomorrow. No sign of Colin's slides yet.",
+    "rampSpendElevated": "Mar 11-18: $135K vs Mar 4-10: $106K — +27% WoW"
   }
 }
