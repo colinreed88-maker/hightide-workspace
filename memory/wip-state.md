@@ -1,38 +1,30 @@
-# Work In Progress
+# WIP State
+*Last updated: March 20, 2026 — Overnight Learning Session (Second Pass)*
 
-## Active Right Now
+## Memory Files Written
 
-### Windows PC Node (High Priority)
-- Node pairs and connects but doesn't advertise system.run
-- exec-approvals.json written with correct format — needs verification on next reconnect
-- Browser relay: Chrome extension installed, needs node running to work
-- Next step: reconnect node, verify exec-approvals.json is being read, test whoami
+| File | Status | Notes |
+|---|---|---|
+| memory/2026-03-20.md | Done | Full session log — both passes |
+| memory/people/flow-gnr-org.md | Done | Charles, Jason, Victor (clarified), Khalid + full G&R org |
+| memory/people/flow-mena-org.md | Done | Full MENA org + Hamilton context |
+| memory/lessons/agent-failure-modes.md | Done | ASI taxonomy, kill criteria, math of failure |
+| memory/lessons/mcp-vs-skill-files.md | Done | Full comparison + Wade's view for Flow context |
+| memory/systems/deepsky-architecture.md | Updated | DeepSky = property platform with ID in Snowflake schema (all null) |
+| memory/projects/flow-portfolio.md | Done | Full 13-property portfolio — US + MENA |
 
-### Slack DM Input (Done ✓)
-- Two-way Slack working as of March 19, 2026
-- New app created from manifest — clean setup
-- DM input confirmed working
-- Channel responses working (require @mention by default)
-- Slack response quality needs improvement — session context not fully wired
+## Key Finding to Surface to Colin
 
-### April 28 Demo (Active)
-- Audience not yet confirmed — need to know who's in the room
-- Charles building leasing loop
-- Eduardo building/demo event bus action
-- Wade piece (finance Q&A) already works
+**DeepSky has a column in ANALYTICS.FLOW.PROPERTIES** (`DEEPSKY_PROPERTY_ID`) — all null. This is the first concrete anchor for what DeepSky is.
 
-### 220 Summer Street
-- Email sent to Chris Fiumara at Crowd Lending March 17
-- Awaiting response — no follow-up reminder set (Colin declined)
-- Foreclosure deed not yet recorded
+## Open Questions for Colin
 
-## Pending / Backlog
-- mammoth package → flow-intranet/package.json for native DOCX ingestion
-- OpenClaw employee rollout (AJ resources needed)
-- AI Summit notes from Levi — not yet ingested
-- Brad needs AI spend forecast from AJ + Scott
-- Schedule call on AJ platform ownership
-- Eduardo demo date TBD
-- Google Workspace CLI installation decision
-- Define feedback metric for Wade self-improvement loop
-- "The Etsy one" — unresolved reference, no context found
+1. What is DeepSky? (property platform? AI layer? vendor?)
+2. What are G-West and Block E? (not in any system)
+3. Can openclaw-hangout decisions be ingested via Granola? (Wade cannot read Slack history)
+
+## Remaining Gaps
+
+- Snowflake FLOW.PROPERTIES: Successfully pulled on second pass ✓
+- DeepSky: Found column, need context from Colin
+- openclaw-hangout: Structurally inaccessible — no Slack read tool

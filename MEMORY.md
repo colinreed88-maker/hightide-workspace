@@ -97,6 +97,44 @@ PRD exists at `/data/workspace/self-managed-building-prd.md` — v0.1 Draft, Mar
 
 Colin has a Windows PC. Discussed pairing it as an OpenClaw node for local desktop automation (Zoom, Granola, etc.). March 13 reminder passed — follow up when opportunity arises.
 
+## Flow People — Key Names
+
+### Growth & Revenue (G&R)
+- **Charles Myslinsky** — G&R org leader, reports to Adam Neumann. Owns revenue, lease-up, marketing, pricing, product, studio.
+- **Jason Bernstein** — Director of Residential Revenue Management, reports to Charles
+- Details: `memory/people/gnr-org.md`
+
+### MENA
+- **Victor Barrero** — Head of Leasing (B2C), reports to Sami Amin
+- **Khalid Bajnaid** — Director of Business Development (B2B), reports to Fawaz Farooqui
+- **Fawaz Farooqui** — Managing Director MENA, reports to DJ Mauch
+- **Sami Amin** — Head of Operations and Revenue, reports to Fawaz
+- Active properties: Flow Granada (GM: Sergio Gomez Salas), Flow Narjis (GM: Hafsah Ibrahim), Flow Olaya
+- Details: `memory/people/mena-org.md`
+
+### Strategic Finance
+- **Hamilton Merrill** — Sr. Associate, Strategic Finance, reports directly to Colin Reed
+- Hamilton is Colin's direct report and closest finance team colleague
+
+## Agent Failure Modes (Summary)
+- ~50% success rate for current autonomous agents across planning, execution, and response
+- Three failure categories: specification issues, inter-agent misalignment, task verification failures
+- Kill criteria: out-of-scope actions, prompt injection attempts, irreversible actions without approval, loop detection, cost overruns
+- Full framework: `memory/lessons/agent-failure-modes.md`
+
+## MCP vs. Skill Files (Wade's View)
+- MCP = connection layer (what tools agent can reach); Skills = capability layer (how agent behaves)
+- They are complementary, not competing
+- For Wade and Flow today: Skills are correct — Flow's complexity is institutional (knowing *how* to interpret data), not just technical (connecting to data)
+- MCP becomes relevant when Flow has a multi-agent mesh needing interop
+- Full analysis: `memory/lessons/mcp-vs-skills.md`
+
+## DeepSky
+- Referenced in context of self-managed building PRD ("Deep Sky event bus write access — Scott ~2 weeks")
+- Appears to be an internal event bus / messaging system being built by Scott's team
+- Not yet findable in knowledge base — no strategy doc indexed
+- Details: `memory/systems/deepsky-notes.md`
+
 ## Known Tool Issues
 
 - `search_memories` tool has a persistent Supabase function conflict error ("Could not choose the best candidate function"). Use `memory_search` (file-based) or `memory_get` instead for reading MEMORY.md and memory/*.md.

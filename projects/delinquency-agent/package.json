@@ -1,0 +1,28 @@
+{
+  "name": "flow-delinquency-agent",
+  "version": "0.1.0",
+  "description": "Flow Rent Delinquency Workflow Agent — identifies delinquent tenants, generates notices, and escalates to property managers.",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm src/main.ts",
+    "build": "tsc",
+    "test": "pnpm exec vitest run",
+    "test:watch": "pnpm exec vitest",
+    "test:coverage": "pnpm exec vitest run --coverage",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "dotenv": "^16.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@vitest/coverage-v8": "^1.6.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
