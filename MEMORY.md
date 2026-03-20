@@ -45,6 +45,14 @@ To map Sage GL departments to budget BUs, join:
 
 `dim_fs_mapping` uses column `gl_account_number` (not `account_no`) and `financial_statement = 'Profit and Loss'` (not 'Income Statement').
 
+## Headcount / Roster Data Source
+
+**Do NOT use `mbr_current_roster`** — it is a stale, manually-seeded Excel snapshot. Deprecated as of March 2026.
+
+The correct source for current headcount and employment status is **`mbr_rippling_headcount_weekly`** — weekly Rippling snapshots with JSON `row_data` blobs. Both the Headcount Explorer and MBR Current Roster tab pull from this table.
+
+Note: `mbr_current_roster` was still referenced by the RAG ingestion pipeline at time of deprecation — verify that pipeline was rerouted.
+
 ## Close Status
 
 As of March 2026: `mbr_last_closed_month` = 2026-02 (February 2026). Advanced on 2026-03-18 at 19:02 UTC.
