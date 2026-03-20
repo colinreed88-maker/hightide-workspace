@@ -1,6 +1,6 @@
 # Flow Building Portfolio
 *Sourced from ANALYTICS.FLOW.PROPERTIES (Snowflake) — March 20, 2026*
-*Updated March 20, 2026 — Third overnight pass*
+*Updated March 20, 2026 — Corrected: G-West = Flow House (same property, completed condo development 2025)*
 
 ## ⚠️ Portfolio Update — March 2026
 **Sold/Divested:** Buckhead (Atlanta), Trace (Austin), Stacks On Main, 2010 West End (Nashville) — confirmed sold as of March 2026.
