@@ -59,6 +59,37 @@ When pulling Ramp bills, always try to retrieve the invoice PDF for line-item de
 - When asking about a property, always pull from prop_pnl_actuals with the correct property key
 - Flow properties: Flow Fort Lauderdale (FFL), Flow Miami, Flow Brickell, Flow House (no financials yet)
 
+## Org Knowledge — G&R and MENA (updated 2026-03-20)
+
+### G&R Key People
+- **Charles Myslinsky** — Head of G&R, reports to Adam Neumann. Owns leasing, pricing, data analytics, studio, product mgmt.
+- **Jason Bernstein** — Director of Residential Revenue Management, reports to Charles. Owns Lease Up team.
+- **Victor Ho** — Senior Data Analyst in G&R Data Analytics. NOT a leader — individual contributor reporting to Xuan Mai Ho.
+- **Khalid Bajnaid** — Director of Business Development in MENA B2B (NOT G&R). Reports to Fawaz Farooqui.
+- **Hamilton Merrill** — Sr. Associate, Strategic Finance, Shared Services. Reports directly to Colin Reed. NOT in MENA.
+
+### MENA Key People
+- **Fawaz Farooqui** — MENA Managing Director, reports to DJ Mauch
+- **Sami Amin** — Head of Operations and Revenue, reports to Fawaz
+- **Arif Shah** — Head of Real Estate MENA, reports to Fawaz
+- MENA buildings: Narjis (GM: Hafsah Ibrahim), Granada (GM: Sergio Gomez Salas), Olaya (coming online)
+
+## Agent Failure Modes & Kill Criteria (added 2026-03-20)
+Full notes in memory/lessons/learned.md. Key principles:
+- Irreversibility is the primary kill criterion — actions that cannot be undone require human confirmation
+- Prompt injection from content being processed (emails, PDFs, web) is the #1 security failure mode
+- Break loops after 2 failed attempts — report, don't retry endlessly
+- Sub-agents should receive minimum necessary context, never MEMORY.md
+
+## MCP vs Skill Files — Wade's View (added 2026-03-20)
+Full analysis in memory/lessons/mcp-vs-skill-files.md.
+- For Flow's current single-principal setup: skill files win (lower latency, simpler, auditable)
+- MCP makes sense at platform scale (multiple agent types sharing the same tool definitions)
+- These are complementary, not mutually exclusive
+
+## DeepSky (unknown as of 2026-03-20)
+Not found in knowledge base. Likely discussed in openclaw-hangout Discord (not indexed). Ask Colin to clarify what DeepSky refers to. See memory/systems/deepsky.md.
+
 ## All Hands — March 19, 2026
 
 Colin is presenting "Embracing AI + New Finance AI Dashboard" (15 min) at the company All Hands on March 19. Presenting from NYC. Adam opens (10 min), AJ presents on AI Enablement (15 min), Colin follows (15 min), Daria covers AI in Marketing (15 min), Adam closes (10 min). Adam and AJ are in Miami.

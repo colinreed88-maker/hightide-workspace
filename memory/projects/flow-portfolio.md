@@ -2,7 +2,10 @@
 *Sourced from ANALYTICS.FLOW.PROPERTIES (Snowflake) — March 20, 2026*
 *Updated March 20, 2026 — Third overnight pass*
 
-## Active Properties (13)
+## ⚠️ Portfolio Update — March 2026
+**Sold/Divested:** Buckhead (Atlanta), Trace (Austin), Stacks On Main, 2010 West End (Nashville) — confirmed sold as of March 2026.
+
+## Active Properties (9 remaining)
 
 ### United States
 

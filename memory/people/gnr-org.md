@@ -1,108 +1,75 @@
 # Flow Growth and Revenue (G&R) Org
+*Source: mbr_current_roster — pulled 2026-03-20*
 
-Source: mbr_current_roster (as of 2026-03-20 query)
-Written: 2026-03-20 overnight learning session
+## Leadership
 
----
+**Charles Myslinsky** — Head of Growth and Revenue
+- Reports to: Adam Neumann (CEO)
+- Owns: The entire G&R org
+- Direct reports: Jason Bernstein, Peter Delatour, Garett Nell, Xuan Mai Ho, Eddie Berrang, AJ Nead, DJ Mauch (Marketing), and likely others
+- Note: "Growth and Revenue" is his title and department — he is the top of this BU
 
-## Key Leaders
+**DJ Mauch** — likely SVP/Chief level (Marketing, Studio, Data Analytics report through him in some capacity)
+- Reports to: appears peer/co-lead alongside Charles
 
-### Charles Myslinsky
-- **Title:** Growth and Revenue (top-level title for BU head)
-- **Department:** Growth and Revenue
-- **Reports to:** Adam Neumann
-- **Role:** Head of the entire G&R business unit
-- **Direct reports include:**
-  - Jason Bernstein (Director of Residential Revenue Management)
-  - Peter Delatour (Director of Lease Up)
-  - Derek Goldstein (Rental Pricing)
-  - AJ Nead (Head of Value Share / Product)
-  - Eddie Berrang (Head of Studio)
-  - Daria Grastara (Head of Marketing)
-  - Xuan Mai Ho (Engineering Leader, Data Analytics)
-  - Garett Nell (Head of Value Share)
-  - Megan Berry (Chief of Staff)
+## Key People Mentioned in Cron Task
 
-### Jason Bernstein
-- **Title:** Director of Residential Revenue Management
-- **Department:** Lease Up
-- **Reports to:** Charles Myslinsky
-- **Owns:** Residential leasing and revenue management across the portfolio
-- **Notable direct reports:** Katie Zinno (Sr. Leasing Specialist)
+**Charles Myslinsky**
+- BU: Growth and Revenue
+- Title: Growth and Revenue (functional head)
+- Reports to: Adam Neumann
+- Owns: Leasing, Pricing, Data Analytics, Studio, Product Management within G&R
 
-### Victor Ho
-- **Title:** Senior Data Analyst
-- **Department:** Data Analytics
-- **Reports to:** Xuan Mai Ho (Engineering Leader)
-- **Note:** This is a different Victor from Victor Barrero in MENA. This Victor is on the G&R data team.
+**Victor Ho**
+- BU: Growth and Revenue
+- Title: Senior Data Analyst
+- Dept: Data Analytics
+- Reports to: Xuan Mai Ho
+- Note: NOT a G&R executive — an individual contributor on the data team
 
-### Khalid — NOTE
-- **No "Khalid" found in G&R org.**
-- The Khalid on the roster is **Khalid Bajnaid** in **MENA** (Director of Business Development). See memory/people/mena-org.md.
+**Jason Bernstein**
+- BU: Growth and Revenue
+- Title: Director of Residential Revenue Management
+- Dept: Lease Up
+- Reports to: Charles Myslinsky
+- Owns: Leasing team (Katie Zinno and others report to him)
 
----
+**Khalid Bajnaid**
+- BU: MENA (not G&R)
+- Title: Director of Business Development
+- Dept: B2B (Revenue B2B, MENA)
+- Reports to: Fawaz Farooqui (MENA Managing Director)
+- Note: Khalid is a MENA person, not a G&R person — the cron task grouped him with G&R incorrectly
 
-## Org Structure
+## G&R Org Structure
 
-### Leasing (Core)
-- **Head of Leasing:** Anthony Pawlik → reports to Dor Shimonov
-- **Director of Lease Up:** Peter Delatour → reports to Charles Myslinsky
-- **Director of Residential Revenue Management:** Jason Bernstein → reports to Charles Myslinsky
-- Regional managers: Jean-Bernard Mathieu (FLL), Dolce Edwards, Briana Prayor, India Ray
-- Specialists across Flow Miami, FLL, Brickell, Flow general
-
-### Data Analytics
-- **Engineering Leader:** Xuan Mai Ho → reports to Charles Myslinsky
-- **Senior Data Scientist:** Ryan Liu
-- **Senior Data Analysts:** Kaivon Ahmad, Victor Ho, Brittney Le, Lucy Wu
-- **Data Analysts:** Vidya Bhagnani
-- **Junior Analysts:** Natalie Goldberg, Erya Du
-- **Senior Engineer:** Chen Deng
-- **Data Science:** Elle Carter → reports to DJ Mauch
-- **Junior Data Analyst:** Natalie Goldberg → reports to Elle Carter
-
-### Marketing
-- **Head of Marketing:** Daria Grastara → reports to Charles Myslinsky
-- **VP, Sales and Partnerships:** Derek Feinman → reports to DJ Mauch
-- **VP, Partnerships & Marketing:** Trusha Chokshi → reports to DJ Mauch
-- **Head of Brand Marketing:** Leah Beyer → reports to Daria Grastara
-- **Performance Marketing Director:** Kayla Tosh → reports to Daria Grastara
-- **Director of Performance Marketing:** John Giuggio → reports to Daria Grastara
-- **PR and MENA Marketing:** Daniela Albin → reports to Daria Grastara
-- **Senior Director, Enterprise:** Julian Pearlman → reports to Derek Feinman
-- **Social Media Associate:** Juliana Scaduto → reports to Leah Beyer
-
-### Studio
-- **Head of Studio:** Eddie Berrang → reports to Charles Myslinsky
-- **Creative Director:** Mallory Turner
-- **Lead Creative PM:** Sammy Stubin
-- **Director, Operations of Studio:** Danielle Bergh
-- **Director of Shipping and Fulfillment:** Anik Zarkos
-- **Subscriber Manager & CS:** Tess Woolslager
-
-### Product Management
-- **Head of Value Share:** Garett Nell → reports to Charles Myslinsky
-- **Product Manager (Head):** AJ Nead → reports to Charles Myslinsky
-- **Senior PM - Growth:** CJ Nicholas → reports to AJ Nead
-- **Product Manager:** Aaron Algave → reports to AJ Nead
-- **Software Engineer:** Ori Bibas → reports to AJ Nead
-- **Senior Engineer (G&R):** Adam Bailin → reports to AJ Nead
-
-### Real Time Experiences
-- **Manager:** Kristian Bouw
-- **Senior Engineers:** Tim Oxley, Scot Bayless, Michael Keung
-- **Producer:** Scott Bandy
+### Leasing
+- Head of Leasing: Anthony Pawlik (reports to Dor Shimonov)
+- Director of Lease Up: Peter Delatour (reports to Charles Myslinsky)
+- Director of Residential Revenue Management: Jason Bernstein (reports to Charles)
+- Leasing Managers: Jean-Bernard Mathieu (FLL), Briana Prayor, Dolce Edwards
+- Multiple Leasing Specialists across Miami, FLL, and national
 
 ### Pricing
-- **Rental Pricing:** Derek Goldstein → reports to Charles Myslinsky
+- Derek Goldstein — Rental Pricing (reports to Charles Myslinsky)
 
-### Brokerage
-- **Condominium Sales Broker:** Yaniv Toledano → reports to Adam Neumann
+### Data Analytics
+- Engineering Leader: Xuan Mai Ho (reports to Charles)
+- Data Science: Elle Carter (reports to DJ Mauch)
+- Senior Data Scientists/Analysts: Ryan Liu, Kaivon Ahmad, Victor Ho
+- Junior Analysts: Natalie Goldberg, Erya Du
 
----
+### Marketing
+- VP Sales and Partnerships: Derek Feinman (reports to DJ Mauch)
+- VP Partnerships & Marketing: Trusha Chokshi (reports to DJ Mauch)
+- Performance Marketing Director: Kayla Tosh
+- Brand Marketing Director: Leah Beyer
 
-## Chain of Command (Top)
+### Studio
+- Head of Studio: Eddie Berrang (reports to Charles)
+- Director of Operations: Danielle Bergh
+- Creative Director: Mallory Turner
 
-Adam Neumann → Charles Myslinsky → [most of G&R]
-Adam Neumann → DJ Mauch → [some Marketing, Elle Carter Data Science, Derek Feinman, Trusha Chokshi, Harrison Smith MENA]
-Adam Neumann → Dor Shimonov → Anthony Pawlik (Head of Leasing)
+### Product Management
+- Head of Value Share: Garett Nell (reports to Charles)
+- Product Manager: AJ Nead (reports to Charles)
