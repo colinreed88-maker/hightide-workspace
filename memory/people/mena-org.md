@@ -1,74 +1,85 @@
 # Flow MENA Org
-*Source: mbr_current_roster — pulled 2026-03-20*
 
-## Leadership
+Source: mbr_current_roster — as of 2026-03-20
 
-**Fawaz Farooqui** — Managing Director, MENA
-- Reports to: DJ Mauch
-- Owns: Full MENA operation (Saudi Arabia, Granada, Narjis properties)
+## MENA Leadership Structure
 
-**Sami Amin** — Head of Operations and Revenue
+**Fawaz Farooqui** — Managing Director (reports to DJ Mauch)
+- Top of MENA org reporting through DJ Mauch to Adam Neumann
+- Direct reports: Arif Shah (Real Estate), Sami Amin (Ops & Revenue), Khalid Bajnaid (B2B)
+
+**Sami Amin** — Head of Operations and Revenue (reports to Fawaz)
+- Oversees B2C leasing and building operations
+- Direct reports: Victor Barrero, Hafsah Ibrahim, Sergio Gomez Salas, Aboelela Mohammed, Osama Alshimy
+
+**Christopher Hill** — Head of Program Design & Development (reports to Adam Neumann directly)
+- Manages physical delivery / construction team in MENA
+- Direct reports: Hossam Jameel (Ops Consultant/Construction), Huda Alrsaeys (Interior Design), Firoz Kanchwala, Naseer Ahamed
+
+## Key People
+
+**Khalid Bajnaid** — Director of Business Development (B2B)
 - Reports to: Fawaz Farooqui
-- Owns: B2C revenue, building operations across properties
+- Dept: B2B
+- Status: Active
+- Direct report: Faris Asiri (Project Manager, B2B)
+- Owns corporate/institutional leasing and business development for MENA
 
-**Christopher Hill** — Head of Program Design & Development
-- Reports to: Adam Neumann (direct line)
-- Owns: Physical delivery, construction, interior design
+**Victor Barrero** — Head of Leasing (B2C)
+- Reports to: Sami Amin
+- Dept: B2C
+- Status: Active
+- Manages: Maryna Grobler (GM of Leasing), Sarah Alsini (Asst Manager Granada), Viktoriia Buznitska, Hussain Ali, Deborah Isaac
+- Owns resident-facing leasing across MENA buildings
 
-**Arif Shah** — Head of Real Estate, MENA
-- Reports to: Fawaz Farooqui
-- Owns: MENA real estate acquisitions and government affairs
+**Harrison Smith** — Product Manager, MENA Executive Support & Special Projects
+- Reports to: DJ Mauch (not Fawaz — direct line to DJ)
+- Status: Active
+- Context: Named as "Harrison" in cron task; likely building community OS, resident management tools
 
-## Hamilton Merrill — IMPORTANT NOTE
+**Note on "Hamilton":** Hamilton Merrill is NOT in MENA. He is in Shared Services / Strategic Finance, reporting to **Colin Reed**. Hamilton is Colin's direct report — Sr. Associate, Strategic Finance.
 
-**Hamilton Merrill is NOT in MENA.** He is in Shared Services / Strategic Finance.
-- BU: Shared Services
-- Title: Sr. Associate, Strategic Finance
-- Reports to: Colin Reed (Wade's principal)
-- Hamilton works directly with Colin on finance/FP&A matters
-- He is a member of Colin's Strategic Finance team
+## MENA Departments
 
-## MENA Revenue Teams
+### Executive
+- Fawaz Farooqui (MD)
+- Sami Amin (Head of Ops & Revenue)
+- Christopher Hill (Head of Program Design)
+- Harrison Smith (PM, Special Projects — reports to DJ Mauch)
+- Mohammed Alghoraibi (Principal Executive Assistant to Fawaz)
 
-### B2B (Business Development)
-- Khalid Bajnaid — Director of Business Development (reports to Fawaz Farooqui)
-- Abdullah AlHamdi — Business Development Manager (reports to Sami Amin)
-- Faris Asiri — Project Manager (reports to Khalid Bajnaid)
+### Real Estate
+- Arif Shah — Head of Real Estate (reports to Fawaz)
+- Yousef Alsharedah — Government Affairs Manager
+- Sikandar Iqbal — Finance Manager, Corporate Finance
 
-### B2C (Leasing)
-- Victor Barrero — Head of Leasing (reports to Sami Amin)
-  - Manages: Narjis and Granada leasing teams
-  - Maryna Grobler — GM of Leasing
-  - Sarah Alsini — Assistant Manager, Leasing (Granada)
-  - Mo Ali — Leasing Manager (Granada)
-  - Multiple leasing specialists at Narjis and Granada
-
-## MENA Buildings / Properties
-- **Narjis** — Building Ops GM: Hafsah Ibrahim (reports to Sami Amin)
-  - Assistant GMs: Husni Abdurazzaq, Saad Alajmi
-  - Large team of Resident Experience Agents
-- **Granada** — General Manager: Sergio Gomez Salas (reports to Sami Amin)
-  - Assistant GMs: Weesam Khuja
-  - Resident Experience Agents on site
-- **Olaya** — Maintenance Manager: Osama Kamel
-- A third MENA building (Olaya) appears to be coming online
-
-## Construction / Physical Delivery
-- Hossam Jameel — Operations Consultant, Construction (reports to Christopher Hill)
-  - Multiple Project Managers under him: Badr Medhat, Sulaiman Nouri, Fares Mahmoud
-- Interior design team: Huda Alrsaeys, Murtadha Sami, Firoz Kanchwala, Alanood Alnowaiser
-
-## Legal (MENA)
-- Stella Templo — Special Counsel (reports to Jonathan Truppman)
-- Alalyaa Alhowity — Legal Advisor
-- Anthony Abi Fadel — Commercial Counsel
-
-## Finance (MENA)
+### Finance
 - Ahmed Khairy El Dein — Finance Manager, Property Accounting (reports to Eyal Karni)
 - Muhammad Ali — Senior Accountant
-- Sikandar Iqbal — Finance Manager, Corporate Finance (reports to Arif Shah)
 
-## People / HR (MENA)
-- Sara Alrwiah — People Team Process Manager (reports to Stella Templo)
-- Sara Keyser — HR Specialist
+### Legal
+- Stella Templo — Special Counsel (reports to Jonathan Truppman)
+- Anthony Abi Fadel — Commercial Counsel
 - Amro Khawagi — Talent Acquisition Associate
+
+### B2B (Business Development)
+- Khalid Bajnaid — Director, BD
+- Abdullah AlHamdi — BD Manager (reports to Sami Amin)
+- Faris Asiri — PM (reports to Khalid)
+
+### B2C (Leasing)
+Buildings: Narjis, Granada
+- Victor Barrero — Head of Leasing
+- Maryna Grobler — GM of Leasing
+- Sarah Alsini — Asst Manager, Granada
+- 10+ leasing specialists and resident experience agents
+
+### Building Operations
+- Hafsah Ibrahim — GM, Narjis
+- Sergio Gomez Salas — GM, Granada
+- Hossam Jameel — Ops Consultant (Construction)
+- Aboelela Mohammed — Facilities Maintenance Manager
+
+## Hamilton Merrill — NOT MENA
+Hamilton Merrill is Colin's direct report in Strategic Finance (Shared Services BU). He has no MENA role. 
+If the question is "who does Hamilton work with?" — answer: Colin Reed and the Strategic Finance team within Shared Services.

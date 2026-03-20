@@ -1,28 +1,28 @@
 {
   "lastChecks": {
-    "ingestionLog": 1742410620,
-    "calendarSync": 1742385540,
+    "ingestionLog": 1742480000,
+    "calendarSync": 1742480000,
     "closeStatus": 1742369820,
     "rampBillsLarge": 1742395020,
     "toastFnB": 1742375820,
     "rampSpendTrend": 1742379420,
     "slackMentions": 1742398620,
     "memoryReview": 1742405220,
-    "gatewayHealth": 1742396820,
+    "gatewayHealth": 1742480000,
     "granola": 1742414220,
-    "email": 1742414220
+    "email": 1742480000
   },
   "consecutiveOks": 0,
-  "lastProactiveTask": "Email sweep — Flow Miami power outage: FPL estimated 5:45pm restoration. Jackie Mazon starting Monday (new hire). Granola: 0 new notes.",
-  "lastUpdated": "2026-03-19T20:37:00Z",
+  "lastProactiveTask": "Email sweep — AWS compromised key alert (account 1501, key deleted), Rippling payroll deadline 03/23. G-West OAC meeting cancelled 3/19 (power outage). DJ/Colin 1:1 cancelled today.",
+  "lastUpdated": "2026-03-20T14:32:00Z",
   "flags": {
     "calendarOAuthBroken": false,
     "slackTokenRevoked": "Slack sync failing all day Mar 19 — token_revoked. Needs manual reconnect.",
     "closeStatusAdvanced": "mbr_last_closed_month advanced to 2026-02 (February) as of 2026-03-18 19:02 UTC",
     "flowHouseFebFinancials": "Santiago sent Flow House Feb 2026 financials (Master, Condo, Leasing) at ~8-9am ET Mar 19 — unread",
-    "ripplingPayroll": "Rippling: payroll run needs action by 03/23/2026",
+    "ripplingPayroll": "Rippling: payroll run needs action by 03/23/2026 (Sunday). Also overdue FOL Property Mgmt LLC task.",
     "hsbcActionRequired": "HSBC IB: FOL Management account action required — livesign sent, fill out instructions for remaining funds.",
-    "flowMiamiPowerOutage": "FPL estimated restoration 5:45 PM ET — likely resolved by now. Main elevator cabs affected during outage.",
-    "jackieMazonStarting": "Jackie Mazon starts Monday Mar 23 — replied to Nora with headshot and bio. Finance hire."
+    "jackieMazonStarting": "Jackie Mazon starts Monday Mar 23 — replied to Nora with headshot and bio. Finance hire.",
+    "awsCompromisedKey": "AWS account ending 1501 had a compromised access key deleted on 2026-03-20. AWS asking to verify no unauthorized resources remain and review IAM/CloudTrail. Two confirmation emails in inbox."
   }
 }

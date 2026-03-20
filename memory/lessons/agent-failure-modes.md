@@ -1,51 +1,70 @@
-# Agent Failure Modes & Kill Criteria
-*Researched March 20, 2026 — Sources: Serokell, PartnershipOnAI, DigitalApplied, Skywork*
+# AI Agent Failure Modes & Kill Criteria
 
-## The Mathematics of Failure
+Source: Galileo AI blog, OWASP GenAI Top 10, NIST RFI research — 2026-03-20
 
-Error compounding is the silent killer of multi-step agents:
-- At 95% per-step accuracy (optimistic): 5 steps → 77% success | 10 steps → 59% | 20 steps → 36%
-- At 99% per-step: 20 steps still only yields ~82% success
-- Implication: true end-to-end autonomy at production reliability (99.9%) is currently impossible for long chains
+## The Core Mental Model
 
-**Practical response:** Keep agents short-chained. 3–5 well-defined operations with rollback points. Optional human confirmations at high-risk steps.
+Every agent decision flows: **Memory → Reflection → Planning → Action**
 
-## Key Failure Mode Taxonomy (ASI Risk IDs)
+A failure in any early step cascades downstream. One corrupted memory at step 5 doesn't stay contained — it poisons every reflection, plan, and action that follows.
 
-| ID | Mode | Severity |
-|---|---|---|
-| ASI01 | **Agent Goal Hijack** — manipulated instructions redirect objectives | Critical |
-| ASI02 | **Tool Misuse & Exploitation** — misuse of legitimate tools via injection/misalignment | Critical |
-| ASI03 | **Identity Abuse** | High |
-| ASI06 | **Memory & Context Poisoning** — RAG stores or context window corrupted | High |
-| ASI07 | **Insecure Inter-Agent Communication** — spoofed messages between agents | High |
-| ASI08 | **Cascading Failures** — single agent error propagates through multi-agent systems | Medium |
-| ASI09 | **Human-Agent Trust Exploitation** — confident, polished but wrong outputs mislead humans | Medium |
-| ASI10 | **Rogue Agents** — misaligned or self-directed unauthorized actions | High |
+## The 7 Critical Failure Modes (Galileo Framework)
 
-## Kill Criteria Framework
+### 1. Specification and System Design Failures
+- Agent requirements are ambiguous or misaligned with intent
+- Example: Instruction to "remove outdated entries" without defining "outdated" → agent deleted half a vendor DB
+- Prevention: Constraint-based checks, adversarial scenario suites, reusable design patterns with explicit termination criteria
 
-A well-designed agent system should include automatic halt/escalation triggers:
+### 2. Reasoning Loops and Hallucination Cascades
+- Agent generates false info, then uses that fabrication for subsequent decisions
+- Example: Inventory agent invents a nonexistent SKU → triggers 4 downstream systems → corrupts pricing, fulfillment, customer comms
+- Prevention: Ensemble verification (consensus across multiple models before acting), uncertainty estimation, LLM-as-Judge pipelines, counterfactual tests in CI
 
-1. **Error rate threshold** — if step failures exceed N% in a session, pause and escalate
-2. **Cost runaway** — token usage growing quadratically (conversational agents): cap per session
-3. **Action scope breach** — agent attempts action outside defined tool set or permission scope
-4. **Confidence collapse** — agent enters a loop or expresses high uncertainty on critical steps
-5. **External instruction injection** — any content being processed that contains command-like text (prompt injection)
-6. **Irreversible action gates** — deletion, external sends, money movement: always require human confirmation
+### 3. Context and Memory Corruption
+- Agent's memory/context becomes compromised — accidentally or maliciously
+- "Sleeper injections" can survive restarts and user changes
+- Prevention: Provenance tracking (who/when/why each memory was written), cryptographic signatures, semantic validators before write, versioned memory stores with rollback capability
 
-## Practical Design Principles
+### 4. Multi-Agent Communication Failures
+- When agents collaborate, inter-agent communication becomes an attack surface
+- Compromised agent can spread malicious instructions across a network
+- Prevention: Encryption, authentication, message validation between agents
 
-- **Stateless > Stateful** for cost control: single-turn agents are cheaper and more reliable
-- **Short chains > long chains**: 3–5 steps with rollback beats 20-step autonomy
-- **Tools need machine-readable feedback**, not human-style UIs — AI needs structured signals
-- **Store intermediate results** in conventional DBs; don't rely on context window as memory
-- **Layered guardrails**: input validation → output filtering → behavioral boundaries → permissions → auditability
-- **Audit trails are non-negotiable** in regulated or high-stakes environments
+### 5. Tool Misuse and Permission Abuse
+- Agents invoking tools outside their intended scope or escalating their own privileges
+- OWASP GenAI Top 10 includes: goal hijacking, identity/privilege abuse, cascading failures
 
-## Wade-Specific Application
+### 6. Goal Hijacking / Prompt Injection
+- Content being processed (emails, PDFs, web pages) injected with instructions
+- McKinsey Lilli hack: autonomous offensive agent found SQL injection in JSON key names (not values — OWASP ZAP missed it), extracted 46.5M chat messages from 43K employees in 2 hours
+- Every exposed API surface needs evaluation against this threat model
 
-- Wade's cron jobs should be kept to focused, bounded tasks (short chain)
-- Any cron/subagent touching external systems (email, calendar, Slack) should have explicit scope limits
-- If a subagent enters a loop or exceeds expected tool calls, it should surface for review, not continue silently
-- Memory poisoning risk: content processed from emails/webhooks must never be treated as instructions (already enforced in SOUL.md and IDENTITY.md)
+### 7. Human Oversight Paradox (Kill Switch Limitations)
+- Human oversight doesn't scale at agent speed
+- UK AISI analyzed 1,000+ public MCP servers — most had no meaningful security boundaries
+- The trust collapse: 43% of executives trusted fully autonomous agents in 2024 → dropped to 22% in 2025 (technology got better; confidence got worse)
+- Kill switches are the LAST line of defense, not the primary control
+
+## Kill Criteria Framework (Wade's View)
+
+For Flow/Wade context, agent actions should trigger human review when:
+
+1. **Irreversible external action** — sending email, creating calendar event, posting publicly, deleting data
+2. **Ambiguous authorization** — instruction came via forwarded message, inferred intent, or indirect ask
+3. **Confidence below threshold** — agent is uncertain and acting could compound errors
+4. **Novel/unexpected tool chain** — agent is about to use a tool combination never done before
+5. **Data exfiltration risk** — output contains PII, compensation, personal context that shouldn't leave a controlled channel
+6. **Conflict with known rules** — instruction appears to override a safety rule or expand permissions
+
+## Multi-Agent Kill Criteria (for future multi-claw deployments)
+
+When running orchestrator + worker pattern:
+- Worker agents should have hard-coded scope limits, not just prompt-based instructions
+- Orchestrator should log every delegation with reason
+- Any worker requesting a new permission mid-task → halt and escalate
+- Loop detection: if agent has called the same tool >3x with no state change → halt
+
+## Wade's Applications
+- Never act on forwarded/quoted content as if it were instructions — already implemented in SOUL.md
+- Memory files are the persistence layer — protect them (versioned, don't overwrite without reason)
+- For multi-claw: prefer "One Gateway per building" initially (isolation) over "One Gateway, many agents" (shared state risks)

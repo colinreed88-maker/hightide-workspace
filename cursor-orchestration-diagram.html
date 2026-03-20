@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wade + Cursor Orchestration</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 0;
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f8fafc;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: #475569;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+
+  .card {
+    background: #0d1420;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    padding: 20px 24px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  /* ── TOP FLOW ROW ── */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .node {
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    flex-shrink: 0;
+    width: 130px;
+  }
+  .node .icon { font-size: 22px; display: block; margin-bottom: 5px; }
+  .node .label { font-size: 12px; font-weight: 700; color: #f1f5f9; display: block; margin-bottom: 2px; }
+  .node .desc { font-size: 10px; color: #94a3b8; line-height: 1.35; }
+  .badge {
+    display: inline-block;
+    font-size: 8px; font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    letter-spacing: 0.4px;
+  }
+
+  .n-colin  { background: #1e293b; border: 1.5px solid #334155; }
+  .n-wade   { background: linear-gradient(135deg,#1e3a5f,#1a3050); border: 1.5px solid #3b82f6; box-shadow: 0 0 18px rgba(59,130,246,.2); }
+  .n-cursor { background: linear-gradient(135deg,#1a2e1a,#162616); border: 1.5px solid #22c55e; box-shadow: 0 0 14px rgba(34,197,94,.15); }
+  .n-deploy { background: linear-gradient(135deg,#2d1b4e,#231440); border: 1.5px solid #a855f7; box-shadow: 0 0 14px rgba(168,85,247,.15); }
+  .n-site   { background: linear-gradient(135deg,#1c2e3a,#162430); border: 1.5px solid #06b6d4; box-shadow: 0 0 12px rgba(6,182,212,.12); }
+
+  .b-blue   { background: rgba(59,130,246,.2); color: #60a5fa; }
+  .b-green  { background: rgba(34,197,94,.2);  color: #4ade80; }
+  .b-purple { background: rgba(168,85,247,.2); color: #c084fc; }
+
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .arrow svg { width: 100%; height: 28px; }
+  .arrow span { font-size: 9px; color: #475569; margin-top: 1px; white-space: nowrap; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: #1e293b; margin: 16px 0; }
+
+  /* ── BOTTOM TWO COLUMNS ── */
+  .bottom {
+    display: flex;
+    gap: 20px;
+  }
+
+  .col {
+    flex: 1;
+  }
+
+  .col-title {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #475569;
+    margin-bottom: 10px;
+  }
+
+  .step {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 7px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #1e293b;
+    border: 1px solid #334155;
+    font-size: 10px; font-weight: 700;
+    color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-text { font-size: 11.5px; color: #94a3b8; line-height: 1.45; }
+  .step-text strong { color: #cbd5e1; }
+
+  /* ── BRIDGE BOXES ── */
+  .bridge {
+    background: #161f2e;
+    border: 1px dashed #334155;
+    border-radius: 7px;
+    padding: 9px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .bridge .bi { font-size: 16px; flex-shrink: 0; }
+  .bridge .bt { font-size: 11px; color: #64748b; line-height: 1.45; }
+  .bridge .bt strong { color: #94a3b8; }
+  code { font-size: 10px; color: #60a5fa; background: rgba(59,130,246,.1); padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>Wade + Cursor Agent Orchestration</h1>
+<p class="subtitle">How flowfinance.life gets updated without anyone touching the IDE</p>
+
+<div class="card">
+
+  <!-- TOP: flow diagram -->
+  <div class="flow-row">
+
+    <div class="node n-colin">
+      <span class="icon">👤</span>
+      <span class="label">Colin</span>
+      <span class="desc">Describes what he wants in plain English</span>
+    </div>
+
+    <div class="arrow">
+      <svg viewBox="0 0 60 28" fill="none">
+        <line x1="2" y1="14" x2="50" y2="14" stroke="#334155" stroke-width="2"/>
+        <polygon points="50,9 58,14 50,19" fill="#475569"/>
+      </svg>
+      <span>request</span>
+    </div>
+
+    <div class="node n-wade">
+      <span class="icon">🤖</span>
+      <span class="label">Wade</span>
+      <span class="desc">Plans, breaks into tasks, orchestrates</span>
+      <span class="badge b-blue">OpenClaw</span>
+    </div>
+
+    <div class="arrow">
+      <svg viewBox="0 0 60 28" fill="none">
+        <line x1="2" y1="14" x2="50" y2="14" stroke="#334155" stroke-width="2"/>
+        <polygon points="50,9 58,14 50,19" fill="#475569"/>
+      </svg>
+      <span>ACP / stdio</span>
+    </div>
+
+    <div class="node n-cursor">
+      <span class="icon">⚡</span>
+      <span class="label">Cursor Agent</span>
+      <span class="desc">Writes & edits code using Composer 2</span>
+      <span class="badge b-green">on your PC</span>
+    </div>
+
+    <div class="arrow">
+      <svg viewBox="0 0 60 28" fill="none">
+        <line x1="2" y1="14" x2="50" y2="14" stroke="#334155" stroke-width="2"/>
+        <polygon points="50,9 58,14 50,19" fill="#475569"/>
+      </svg>
+      <span>git push</span>
+    </div>
+
+    <div class="node n-deploy">
+      <span class="icon">🚀</span>
+      <span class="label">GitHub → Vercel</span>
+      <span class="desc">Auto-deploys on every push</span>
+      <span class="badge b-purple">auto</span>
+    </div>
+
+    <div class="arrow">
+      <svg viewBox="0 0 60 28" fill="none">
+        <line x1="2" y1="14" x2="50" y2="14" stroke="#334155" stroke-width="2"/>
+        <polygon points="50,9 58,14 50,19" fill="#475569"/>
+      </svg>
+      <span>live</span>
+    </div>
+
+    <div class="node n-site">
+      <span class="icon">🌐</span>
+      <span class="label">flowfinance.life</span>
+      <span class="desc">Updated. Colin never touched the IDE.</span>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BOTTOM: two columns -->
+  <div class="bottom">
+
+    <!-- Left: What Wade does -->
+    <div class="col">
+      <div class="col-title">What Wade does in the middle</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Understands the request</strong> — translates plain English into the exact code changes needed</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Breaks it into sub-tasks</strong> — e.g. "create page", "update nav", "add data query", in order</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Sends each task to Cursor</strong> via ACP — Cursor executes them against the real codebase</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Reviews the output</strong> — checks it looks right before anything gets pushed</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>Deploys</strong> — pushes to GitHub, Vercel picks it up, site updates live</div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-text"><strong>Reports back</strong> — "Done. Here's what changed and the link."</div>
+      </div>
+    </div>
+
+    <!-- Right: The bridge -->
+    <div class="col">
+      <div class="col-title">What makes this possible — the bridge</div>
+
+      <div class="bridge">
+        <div class="bi">🔌</div>
+        <div class="bt">
+          <strong>Electron Tunnel (today)</strong><br>
+          Connects Wade on Railway to Colin's Windows PC. Lets Wade run commands locally — including starting Cursor's agent.
+        </div>
+      </div>
+
+      <div class="bridge">
+        <div class="bi">⚡</div>
+        <div class="bt">
+          <strong>Cursor CLI ACP mode</strong><br>
+          <code>cursor agent acp</code> turns Cursor into a headless worker that accepts tasks programmatically instead of through the GUI.
+        </div>
+      </div>
+
+      <div class="bridge">
+        <div class="bi">🔁</div>
+        <div class="bt">
+          <strong>The steady-state loop</strong><br>
+          Colin says what he wants → Wade plans → Cursor builds → Wade reviews → ships. Colin never opens the IDE.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,53 +1,83 @@
-# MCP vs. Skill Files — Wade's View
-_Last updated: 2026-03-20 — web research + first-principles reasoning_
+# MCP vs Skill Files — Wade's Perspective
+
+Research date: 2026-03-20
+Sources: tty4.dev, friedrichs-it.de, ravichaganti.com, dev.to/phil-whittaker, #openclaw-hangout Slack, AI Summit notes
+
+---
 
 ## What Each Is
 
 ### Model Context Protocol (MCP)
-- Introduced by Anthropic; provides **standardized connection layer** between AI models and external systems
-- Think of it as a USB standard for tools — any MCP server can plug into any MCP-compatible model
-- Gives LLMs deterministic, structured access to tools, APIs, databases
-- Stateless per-call; connection is the abstraction
-- Gaining wide adoption: Claude, Cursor, GitHub Copilot, Windsurf, Gemini all support it
-- Best for: tool integration, API access, database queries, file system ops
+- Full protocol specification with three-tier Client-Host-Server architecture
+- Uses JSON-RPC 2.0 communication
+- Designed to connect agents to **external systems**: databases, APIs, SaaS tools, file systems, cloud services
+- When client connects: calls `tools/list` to discover → LLM decides when to call `tools/call`
+- Strong isolation and credential management (server boundaries)
+- Standards-based, deterministic, structured
+- Open-sourced by Anthropic in November 2024; became industry standard in 2025
+- Gained progressive discovery in January 2026 (removed Skills' context efficiency advantage)
 
 ### Agent Skills (Skill Files)
-- Released by Anthropic as open standard Dec 18, 2025
-- Package **how an agent should perform a task** — workflow, methodology, constraints, prompting
-- Ephemeral "clouds of knowledge" — adaptive context, not just connection
-- Best for: capturing institutional knowledge, workflows, decision trees, persona-specific behavior
-- Simon Willison called them potentially bigger than MCP
+- Simple Markdown files + optional scripts in a folder structure (SKILL.md + resources/ + scripts/)
+- No protocol implementation required — just a Markdown file the agent reads
+- Designed for **procedural knowledge**: how to do something, workflow instructions, adaptive context
+- Works as "ephemeral clouds of knowledge" LLMs pull from as needed
+- Released as open standard by Anthropic in December 2025
+- This is exactly what OpenClaw uses: /openclaw/skills/*/SKILL.md
+- Independent convergence: Cursor found "MCP + skills bundled together much more powerful than MCPs alone"
 
-### The Key Distinction
-> MCP = **connection** (what the agent can reach)
-> Skills = **capability** (how the agent should behave once it can reach things)
+---
 
-They are **complementary, not competing**.
-- MCP layer: connect to financial databases, reporting APIs
-- Skill layer: encode company-specific methodology for how to use those connections
+## The Debate
 
-## Wade's View for Flow's Context
+**Competing?** No. **Complementary?** Yes.
 
-### Why Skills Are the Right Primary Abstraction for Wade
+The framing "MCP vs skills" is a false binary. They solve different problems:
 
-1. **Flow's complexity is institutional, not technical.** The hard problem isn't connecting to Ramp or Supabase — that's solved. The hard problem is knowing *how* to interpret a P&L variance, *which* scenario to pull, *when* to escalate vs. synthesize. That's skill territory.
+| Dimension | MCP | Skills |
+|---|---|---|
+| Purpose | Connect to external systems | Package procedural knowledge |
+| Format | Full protocol (JSON-RPC) | Markdown file |
+| Isolation | Strong (server boundaries) | Weak (runs in agent context) |
+| Credentials | Managed at server level | Not handled |
+| Best for | External APIs, databases, SaaS | Workflows, instructions, context |
+| Discovery | Protocol-level `tools/list` | Agent reads the file |
+| Complexity | High | Low |
 
-2. **Skills encode Colin's preferences.** The way Colin wants actuals formatted, the variance thresholds he cares about, the nuance between "Budget" and "Forecast" — these are not connection problems. They are workflow problems. Skills are the right place to encode them.
+---
 
-3. **Skills are version-controlled and readable.** A SKILL.md file is inspectable by a human. MCP server configs are not. At Flow's current scale, readable > technically elegant.
+## Wade's View (Flow Context)
 
-4. **MCP makes sense at the platform layer.** If Flow ever exposes its data systems to external agents (Cursor, Claude Code), MCP servers make that clean. But Wade is internal — he already has direct tool access. MCP adds overhead without benefit for his current use case.
+**For Flow's current stack:**
 
-5. **The hybrid model is the end state.** MCP handles external/cross-model tool exposure. Skills handle agent-specific methodology. For Wade: skills drive behavior, and if Flow ever builds MCP servers for the intranet data, they slot in underneath without disrupting skill logic.
+Skills are the right choice for:
+- How to analyze a department P&L
+- How to draft a board memo
+- How to format Telegram messages
+- How to interpret Ramp data
+- Procedural SOPs that require judgment
 
-### Practical Verdict
-- **Today:** Skills are correct for Wade. They encode how to do the job, not just what tools exist.
-- **Future:** If Flow builds a multi-agent system (e.g., dedicated leasing agent, dedicated finance agent), MCP becomes the right interop layer between them. Skills remain the behavior layer on top.
-- **Risk of over-investing in MCP now:** Premature abstraction. Flow doesn't yet have the agent mesh that MCP is built to serve.
+MCP is the right choice for:
+- Connecting to DeepSky (once the MCP server is production-ready)
+- Snowflake data warehouse access
+- Sage Intacct GL queries
+- Any new external system that needs deterministic, typed access
 
-## Sources
-- dev.to: "MCP vs Agent Skills: Why They're Different, Not Competing" (Phil Whittaker)
-- Cosmic.js: "MCP vs Skills: Understanding AI Coding Assistant Integrations in 2026"
-- agentskills.so: "Agent Skills compare MCP"
-- K-Dense: "Agent Skills vs MCP: Technical Comparison" (Jan 2026)
-- Reddit r/AI_Agents: MCP or Skills for delivering extra context?
+**The practical conclusion:**
+Wade should continue using SKILL.md files for behavioral/procedural knowledge. As DeepSky matures, the path forward is MCP connectors to the graph — not trying to encode DeepSky access patterns in skill files.
+
+The AI Summit notes confirm this: "MCP server launched this morning, debugging in progress" — Flow is already moving in this direction.
+
+**On OpenClaw's architecture:**
+The #openclaw-hangout debate shows the community is converging on: Skills for agent personality/procedures + MCP for structured external tool access. This is also what the broader industry found (Cursor's discovery). OpenClaw's SKILL.md pattern is validated.
+
+**Security consideration:**
+Skills have weak isolation (run in agent context, no credential management). Never put credentials, tokens, or sensitive config in skill files. Use MCP servers for anything requiring auth to external systems.
+
+---
+
+## Timeline
+- Nov 2024: MCP open-sourced by Anthropic
+- Dec 2025: Agent Skills released as open standard
+- Jan 2026: MCP gains progressive discovery
+- Mar 2026: Flow's DeepSky MCP server launched (in debugging)

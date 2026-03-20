@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wade × Cursor Agent Orchestration</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    :root {
+      --moonlight: #F3EDDF;
+      --midnight: #3D3D3D;
+      --sunlight: #E89700;
+      --heart: #F99AA9;
+      --ocean: #7DADBB;
+      --olive: #767317;
+      --roots: #8C4500;
+      --page-bg: #EDE8DA;
+      --card-bg: #FFFFFF;
+      --border: rgba(61,61,61,0.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--page-bg);
+      color: var(--midnight);
+      min-height: 100vh;
+      padding: 40px 24px 60px;
+    }
+
+    .page-header {
+      max-width: 960px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: 38px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+      color: var(--midnight);
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+
+    .page-title span {
+      color: var(--sunlight);
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: rgba(61,61,61,0.55);
+      font-weight: 400;
+    }
+
+    /* ── Main diagram container ── */
+    .diagram {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Row layouts ── */
+    .row {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+    }
+
+    /* ── Connector arrows ── */
+    .connector-v {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 48px;
+    }
+
+    .connector-v svg {
+      display: block;
+    }
+
+    .connector-h {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      flex-shrink: 0;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(61,61,61,0.04), 0 8px 32px rgba(61,61,61,0.07);
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: rgba(61,61,61,0.58);
+      line-height: 1.6;
+    }
+
+    .accent-bar {
+      height: 3px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Colin (user) ── */
+    .card-colin {
+      border-color: rgba(61,61,61,0.15);
+      width: 280px;
+    }
+    .card-colin .accent-bar { background: var(--midnight); }
+    .card-colin .card-label { color: rgba(61,61,61,0.45); }
+    .card-colin .card-title { color: var(--midnight); }
+
+    /* ── Wade (orchestrator) ── */
+    .card-wade {
+      border-color: rgba(232,151,0,0.4);
+      background: #FFFDF7;
+      width: 380px;
+    }
+    .card-wade .accent-bar { background: var(--sunlight); }
+    .card-wade .card-label { color: var(--sunlight); }
+    .card-wade .card-title { color: var(--midnight); }
+
+    .wade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(232,151,0,0.10);
+      border: 1px solid rgba(232,151,0,0.25);
+      border-radius: 20px;
+      padding: 3px 10px 3px 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--roots);
+      margin-top: 12px;
+    }
+
+    .wade-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--sunlight);
+    }
+
+    /* ── Context block ── */
+    .context-row {
+      display: flex;
+      gap: 12px;
+      margin: 0 auto;
+      max-width: 920px;
+      padding: 0 16px;
+    }
+
+    .context-card {
+      flex: 1;
+      background: var(--moonlight);
+      border: 1.5px solid rgba(61,61,61,0.08);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .context-card-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--midnight);
+      margin-bottom: 5px;
+    }
+
+    .context-card-desc {
+      font-size: 11px;
+      color: rgba(61,61,61,0.55);
+      line-height: 1.55;
+    }
+
+    .context-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(61,61,61,0.40);
+      text-align: center;
+      margin: 0 auto 10px;
+    }
+
+    /* ── Agents row ── */
+    .agents-row {
+      display: flex;
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .card-agent {
+      flex: 1;
+      border-color: rgba(125, 173, 187, 0.5);
+      background: #F8FCFD;
+    }
+    .card-agent .accent-bar { background: var(--ocean); }
+    .card-agent .card-label { color: var(--ocean); }
+
+    .agent-task-list {
+      list-style: none;
+      margin-top: 10px;
+    }
+
+    .agent-task-list li {
+      font-size: 11.5px;
+      color: rgba(61,61,61,0.60);
+      padding: 3px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.5;
+    }
+
+    .agent-task-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--ocean);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    /* ── Result card ── */
+    .card-result {
+      border-color: rgba(118,115,23,0.35);
+      background: #FAFBF5;
+      width: 380px;
+    }
+    .card-result .accent-bar { background: var(--olive); }
+    .card-result .card-label { color: var(--olive); }
+
+    /* ── Fan connector (Wade → Agents) ── */
+    .fan-connector {
+      max-width: 960px;
+      margin: 0 auto;
+      height: 60px;
+      position: relative;
+    }
+
+    .fan-connector svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Gather connector (Agents → Wade) ── */
+    .gather-connector {
+      max-width: 960px;
+      margin: 0 auto;
+      height: 60px;
+      position: relative;
+    }
+
+    .gather-connector svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Step labels ── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--sunlight);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-num-ocean {
+      background: var(--ocean);
+    }
+
+    .step-num-olive {
+      background: var(--olive);
+    }
+
+    .step-num-dark {
+      background: var(--midnight);
+    }
+
+    /* ── Arrow styles ── */
+    .arrow-stroke { stroke: rgba(61,61,61,0.25); stroke-width: 1.5; fill: none; }
+    .arrow-stroke-sunlight { stroke: rgba(232,151,0,0.45); stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
+    .arrow-stroke-ocean { stroke: rgba(125,173,187,0.55); stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
+    .arrow-stroke-olive { stroke: rgba(118,115,23,0.45); stroke-width: 1.5; fill: none; stroke-dasharray: 4 3; }
+    .arrowhead { fill: rgba(61,61,61,0.30); }
+    .arrowhead-sunlight { fill: rgba(232,151,0,0.55); }
+    .arrowhead-ocean { fill: rgba(125,173,187,0.70); }
+    .arrowhead-olive { fill: rgba(118,115,23,0.55); }
+
+    /* ── Rules pills ── */
+    .rules-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      font-size: 10.5px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .pill-ocean {
+      background: rgba(125,173,187,0.14);
+      color: #4A8A9A;
+      border: 1px solid rgba(125,173,187,0.30);
+    }
+
+    .pill-sunlight {
+      background: rgba(232,151,0,0.10);
+      color: var(--roots);
+      border: 1px solid rgba(232,151,0,0.22);
+    }
+
+    /* ── Footer ── */
+    .footer-note {
+      max-width: 960px;
+      margin: 44px auto 0;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(61,61,61,0.40);
+      line-height: 1.7;
+    }
+
+    /* ── Centering wrappers ── */
+    .center-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── Horizontal connector line ── */
+    .h-line {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="page-title">Wade <span>×</span> Cursor Agent Orchestration</div>
+    <div class="page-subtitle">How a single conversation becomes parallel coding work — coordinated and synthesized automatically</div>
+  </div>
+
+  <div class="diagram">
+
+    <!-- Step 1: Colin sends a request -->
+    <div class="center-row">
+      <div class="card card-colin">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-dark">1</div>
+          <div class="card-label">The request</div>
+        </div>
+        <div class="card-title">Colin asks a question</div>
+        <div class="card-desc">A task comes in — Slack, Telegram, or the intranet. It could be a data question, a code change, a new dashboard page, or a diagnosis.</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="connector-v">
+      <svg width="24" height="48" viewBox="0 0 24 48">
+        <line x1="12" y1="0" x2="12" y2="38" class="arrow-stroke"/>
+        <polygon points="12,48 7,36 17,36" class="arrowhead"/>
+      </svg>
+    </div>
+
+    <!-- Step 2: Wade as orchestrator -->
+    <div class="center-row">
+      <div class="card card-wade">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num">2</div>
+          <div class="card-label">Orchestration</div>
+        </div>
+        <div class="card-title">Wade plans the work</div>
+        <div class="card-desc">Wade reads the task, decides which parts need coding work, and prepares context packets — cursor rules, file paths, data schemas, relevant memories — for each sub-agent.</div>
+        <div class="wade-badge">
+          <div class="wade-badge-dot"></div>
+          Main session · Full memory + data access
+        </div>
+      </div>
+    </div>
+
+    <!-- Arrow + context box -->
+    <div class="connector-v">
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <line x1="12" y1="0" x2="12" y2="14" class="arrow-stroke-sunlight"/>
+        <polygon points="12,24 7,12 17,12" class="arrowhead-sunlight"/>
+      </svg>
+    </div>
+
+    <!-- Context being passed -->
+    <div class="context-section-label">Context injected into each agent</div>
+    <div class="context-row">
+      <div class="context-card">
+        <div class="context-card-title">Cursor Rules (.mdc)</div>
+        <div class="context-card-desc">Design system, page creation standards, BU mapping rules, Snowflake schema, property analysis conventions</div>
+        <div class="rules-pills">
+          <span class="pill pill-ocean">design-system</span>
+          <span class="pill pill-ocean">page-creation</span>
+          <span class="pill pill-ocean">bu-filtering</span>
+          <span class="pill pill-ocean">snowflake-schema</span>
+          <span class="pill pill-ocean">property-pnl</span>
+        </div>
+      </div>
+      <div class="context-card">
+        <div class="context-card-title">Task Scope</div>
+        <div class="context-card-desc">Exact files to touch, which route to create, which data tables to use, what the output should look like</div>
+        <div class="rules-pills">
+          <span class="pill pill-sunlight">target file paths</span>
+          <span class="pill pill-sunlight">supabase tables</span>
+          <span class="pill pill-sunlight">acceptance criteria</span>
+        </div>
+      </div>
+      <div class="context-card">
+        <div class="context-card-title">Memory + Constraints</div>
+        <div class="context-card-desc">No npm, only pnpm. Negatives in parentheses. flow.life domain. Close status, data freshness, known quirks</div>
+        <div class="rules-pills">
+          <span class="pill pill-sunlight">pnpm only</span>
+          <span class="pill pill-sunlight">read-only Sage</span>
+          <span class="pill pill-sunlight">force-dynamic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fan connector: Wade → Agents -->
+    <div class="fan-connector">
+      <svg viewBox="0 0 960 60" preserveAspectRatio="none">
+        <!-- Center stem down from Wade -->
+        <line x1="480" y1="0" x2="480" y2="20" class="arrow-stroke-sunlight"/>
+        <!-- Fan out to 3 agents: ~160, 480, 800 -->
+        <line x1="480" y1="20" x2="160" y2="48" class="arrow-stroke-sunlight"/>
+        <line x1="480" y1="20" x2="480" y2="48" class="arrow-stroke-sunlight"/>
+        <line x1="480" y1="20" x2="800" y2="48" class="arrow-stroke-sunlight"/>
+        <!-- Arrowheads -->
+        <polygon points="160,60 154,46 166,46" class="arrowhead-sunlight"/>
+        <polygon points="480,60 474,46 486,46" class="arrowhead-sunlight"/>
+        <polygon points="800,60 794,46 806,46" class="arrowhead-sunlight"/>
+      </svg>
+    </div>
+
+    <!-- Step 3: Three Cursor agents in parallel -->
+    <div class="agents-row">
+      <div class="card card-agent">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-ocean">3a</div>
+          <div class="card-label">Cursor Agent</div>
+        </div>
+        <div class="card-title">New page / route</div>
+        <ul class="agent-task-list">
+          <li>Creates page.tsx, loading.tsx, content component</li>
+          <li>Applies design system + auth boilerplate</li>
+          <li>Registers in PAGE_REGISTRY</li>
+          <li>Writes data utility in lib/</li>
+        </ul>
+      </div>
+
+      <div class="card card-agent">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-ocean">3b</div>
+          <div class="card-label">Cursor Agent</div>
+        </div>
+        <div class="card-title">Data layer</div>
+        <ul class="agent-task-list">
+          <li>Queries Supabase / Snowflake / Sage</li>
+          <li>Validates column names against schema ref</li>
+          <li>Writes typed interfaces</li>
+          <li>Tests query against real data</li>
+        </ul>
+      </div>
+
+      <div class="card card-agent">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-ocean">3c</div>
+          <div class="card-label">Cursor Agent</div>
+        </div>
+        <div class="card-title">Diagnosis / review</div>
+        <ul class="agent-task-list">
+          <li>Reads error output or broken component</li>
+          <li>Checks cursor rules for constraints violated</li>
+          <li>Proposes fix with correct patterns</li>
+          <li>Returns a diff or replacement file</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Gather connector: Agents → Wade -->
+    <div class="gather-connector">
+      <svg viewBox="0 0 960 60" preserveAspectRatio="none">
+        <!-- Lines gathering back to center -->
+        <line x1="160" y1="0" x2="480" y2="40" class="arrow-stroke-ocean"/>
+        <line x1="480" y1="0" x2="480" y2="40" class="arrow-stroke-ocean"/>
+        <line x1="800" y1="0" x2="480" y2="40" class="arrow-stroke-ocean"/>
+        <!-- Center arrow down -->
+        <line x1="480" y1="40" x2="480" y2="50" class="arrow-stroke-ocean"/>
+        <polygon points="480,60 474,48 486,48" class="arrowhead-ocean"/>
+      </svg>
+    </div>
+
+    <!-- Step 4: Wade synthesizes -->
+    <div class="center-row">
+      <div class="card card-result">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-olive">4</div>
+          <div class="card-label">Synthesis</div>
+        </div>
+        <div class="card-title">Wade reviews and delivers</div>
+        <div class="card-desc">Wade receives results from all agents, cross-checks them against constraints and memory, resolves any conflicts, and delivers a single coherent answer — code, analysis, or both — back to Colin.</div>
+      </div>
+    </div>
+
+    <!-- Arrow down -->
+    <div class="connector-v">
+      <svg width="24" height="48" viewBox="0 0 24 48">
+        <line x1="12" y1="0" x2="12" y2="38" class="arrow-stroke"/>
+        <polygon points="12,48 7,36 17,36" class="arrowhead"/>
+      </svg>
+    </div>
+
+    <!-- Step 5: Colin gets the answer -->
+    <div class="center-row">
+      <div class="card card-colin">
+        <div class="accent-bar"></div>
+        <div class="step-indicator">
+          <div class="step-num step-num-dark">5</div>
+          <div class="card-label">Delivery</div>
+        </div>
+        <div class="card-title">Colin gets a complete answer</div>
+        <div class="card-desc">Files committed, data confirmed, explanation written. One turn. Wade writes what happened to memory so the next session starts with full context.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    The cursor rules — design system, page standards, Snowflake schema, BU mapping — travel with every agent spawn.<br />
+    Agents never see MEMORY.md or personal context. They receive only the minimum needed to complete their task.
+  </div>
+
+</body>
+</html>

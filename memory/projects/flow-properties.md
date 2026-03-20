@@ -1,32 +1,40 @@
-# Flow Property Portfolio — Notes
-*Compiled 2026-03-20*
+# Flow Building Portfolio
 
-## Note on G-West, Block E, Stacks
+Source: Snowflake ANALYTICS.FLOW.PROPERTIES — as of 2026-03-20
 
-These three property names were referenced in the overnight learning cron task. The knowledge base had no indexed documents matching these names. A web search for "Flow residential G-West Block E Stacks" returned general Flow Miami/Brickell apartment results — no specific project pages for G-West, Block E, or Stacks were found publicly.
+## Active Properties (13 total)
 
-These may be:
-- Internal project codenames for upcoming developments
-- Properties tracked in Snowflake / Yardi but not indexed in the knowledge base
-- Referenced in meeting notes or strategy docs that haven't been ingested
+| Property Name | Property Code | Country | Property Group | Multi-Building |
+|---|---|---|---|---|
+| Flow Miami World | flow_miami_world | US | Flow Miami (parent) | Yes |
+| Flow Miami East | flow_miami_east | US | Flow Miami | Yes |
+| Flow Miami West | flow_miami_west | US | Flow Miami | Yes |
+| Flow House | flow_house | US | Flow House | No |
+| Flow Brickell | flow_brickell | US | Flow Brickell | No |
+| Flow Fort Lauderdale | flow_fort_lauderdale | US | — | — |
+| Stacks On Main | stacks_on_main | US | — | — |
+| Trace | trace | US | — | — |
+| 2010 West End | 2010_west_end | US | — | — |
+| 3005 Buckhead | 3005_buckhead | US | — | — |
+| Flow Granada | flow_granada | — | — | — |
+| Flow Narjis East | flow_narjis | — | — | — |
+| Flow Olaya | flow_olaya | — | — | — |
 
-## Known Flow Properties (from public sources and knowledge base)
+## Notes
+- Flow Miami has 3 sub-properties: World (parent), East, West. Each has its own Yardi ID.
+- Flow Brickell is the DeepSky ACES V2 Phase 1 sandbox target (Smart Agreements).
+- Flow Granada, Narjis, Olaya are MENA properties (Saudi Arabia based on MENA org).
+- G-West and Block E were referenced in the learning task but do NOT appear in the current Snowflake properties table — likely pipeline names, development names, or pre-acquisition assets.
+- Stacks On Main is a US property; Trace appears to be a US multifamily property.
+- 2010 West End and 3005 Buckhead suggest Atlanta-area properties (West End, Buckhead are Atlanta neighborhoods).
 
-### US Properties
-- **Flow Miami** (Downtown Miami Worldcenter) — studios, 1-3BR luxury apartments; flagship property
-- **Flow Brickell** — waterfront luxury in Miami's Brickell neighborhood
-- **Flow FLL** — Fort Lauderdale leasing presence (per G&R roster)
+## Property Groups
+- **Flow Miami** — World / East / West (multi-building campus)
+- **Flow Brickell** — standalone
+- **Flow House** — standalone
+- All others appear to be standalone or group parents
 
-### MENA Properties (Saudi Arabia)
-- **Narjis** — active residential building in KSA; Building Ops GM is Hafsah Ibrahim; B2C leasing team active
-- **Granada** — active residential building in KSA; Building Ops GM is Sergio Gomez Salas; B2C leasing team active
-- **Olaya** — appears to be a third KSA property coming online (Osama Kamel listed as Maintenance Manager, Building Ops Olaya)
-
-## Action Needed
-
-To get full portfolio detail on G-West, Block E, and Stacks:
-- Query ANALYTICS.FLOW.PROPERTIES in Snowflake for the full property list
-- Check Yardi or Snowflake MULTIFAMILY tables for unit counts and status
-- Ask Colin directly if these are codenames for active deals
-
-*This file should be updated with Snowflake query results when time allows.*
+## DeepSky Migration Status
+- As of March 2026: DEEPSKY_PROPERTY_ID is null for all properties viewed — migration in progress
+- Yardi remains the system of record for US properties
+- DeepSky cutover targeted post-April 2026
