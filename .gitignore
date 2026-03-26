@@ -12,3 +12,5 @@ wade_voice*.ogg
 
 # Temp files
 *.tmp
+node_modules/
+*.png

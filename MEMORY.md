@@ -98,6 +98,20 @@ Full analysis in memory/lessons/mcp-vs-skill-files.md.
 ## DeepSky (unknown as of 2026-03-20)
 Not found in knowledge base. Likely discussed in openclaw-hangout Discord (not indexed). Ask Colin to clarify what DeepSky refers to. See memory/systems/deepsky.md.
 
+## February 2026 Property Actuals (pulled 2026-03-24)
+
+- **Flow Fort Lauderdale (society)**: Revenue $2.224M, NOI $1.265M, Occ 90.9% (740 units). Debt service $200K over budget ($1.69M vs $1.49M). R&M $32K over. NOI after debt service: ($424K) vs ($206K) budget.
+- **Flow Miami Adjusted (fmAdj)**: Revenue $1.676M, NOI $1.008M, Occ 93.0% (444 units). Portfolio bright spot — NOI above budget ($939K), NOI after debt service positive: $121K vs ($16K) budget.
+- **Flow Brickell**: Revenue $857K, NOI ($258K), Occ 44.3% (632 units). Lease-up phase. Marketing $69K over budget ($202K vs $119K). Payroll well under budget.
+- FLL potential Q3/Q4 sale at $325-375M. Current basis ~$305M.
+- Property insurance down 35% starting April — corporate pays ~$1-2M upfront then allocates to properties.
+
+## New Finance Team Hires (started 2026-03-23)
+
+- **Ari Sokolow** — Manager FP&A, reports to Colin Reed
+- **Jackie Mazon** — Sr Manager Strategic Finance, reports to Colin Reed
+- Both actively onboarding to systems and accepting MBR calendar invites.
+
 ## All Hands — March 19, 2026
 
 Colin is presenting "Embracing AI + New Finance AI Dashboard" (15 min) at the company All Hands on March 19. Presenting from NYC. Adam opens (10 min), AJ presents on AI Enablement (15 min), Colin follows (15 min), Daria covers AI in Marketing (15 min), Adam closes (10 min). Adam and AJ are in Miami.
